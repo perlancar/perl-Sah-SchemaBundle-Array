@@ -1,4 +1,4 @@
-package Sah::Schema::array::num::monotonically_increasing;
+package Sah::Schema::array::int::monotonically_increasing;
 
 use strict;
 
@@ -8,17 +8,14 @@ use strict;
 # VERSION
 
 our $schema = [array => {
-    summary => 'An array of numbers with monotonically increasing elements',
+    summary => 'An array of integers with monotonically increasing elements',
     description => <<'_',
 
-Use this schema if you want to accept an array of numbers where the elements are
-monotonically increasing, i.e. `elem(i) > elem(i-1) for all i > 0`. It's similar
-to the `array::num::sorted` schema except that duplicate numbers are not allowed
-(e.g. `[1, 2, 2, 4]` is okay for `array::num::sorted` but will fail
-`array::num::monotonically_increasing`).
+This is like the `array::num::monotonically_increasing` schema except elements
+must be integers.
 
 _
-    of => ['num', {req=>1}],
+    of => ['int', {req=>1}],
     prefilters => ['Array::check_elems_numeric_monotonically_increasing'],
     examples => [
         {value=>{}, valid=>0, summary=>"Not an array"},
@@ -27,7 +24,8 @@ _
         {value=>[1, undef], valid=>0, summary=>"Contains an undefined element"},
         {value=>[1, 2, 2, 3], valid=>0, summary=>"Duplicate elements"},
         {value=>[1, 3, 2], valid=>0, summary=>"Not monotonically increasing"},
-        {value=>[1, 2.9, 3], valid=>1},
+        {value=>[1, 2.9, 3], valid=>0, summary=>"Contains a non-integer element"},
+        {value=>[1, 2, 3], valid=>1},
     ],
 }];
 
