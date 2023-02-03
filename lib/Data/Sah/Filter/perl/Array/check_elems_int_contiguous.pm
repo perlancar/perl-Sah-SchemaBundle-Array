@@ -38,7 +38,10 @@ sub filter {
         "do { ", (
             "my \$ary = $dt; my \$prev; my \$res = [undef, \$ary]; ",
             "my \$ref = ref \$ary; ",
-            "if (\$ref ne 'ARRAY') { \$res->[0] = 'Not an array' } else { for my \$i (0 .. \$#{\$ary}) { if (\$i > 0) { if (\$prev + 1 != \$ary->[\$i]) { \$res->[0] = qq(Elements not contiguous (check element[\$i]) ); last } } if (\$prev != int(\$prev)) { \$res->[0] = qq(Contain non-integer (check element[\$i])) ; last } \$prev = \$ary->[\$i] } } ",
+            "if (\$ref ne 'ARRAY') { \$res->[0] = 'Not an array' ",
+            "} else { ", (
+                "for my \$i (0 .. \$#{\$ary}) { if (\$i > 0) { if (\$prev + 1 != \$ary->[\$i]) { \$res->[0] = qq(Elements not contiguous (check element[\$i]) ); last } } \$prev = \$ary->[\$i]; if (\$prev != int(\$prev)) { \$res->[0] = qq(Contain non-integer (check element[\$i])) ; last } } } ",
+            ),
             "\$res ",
         ), "}",
     );
