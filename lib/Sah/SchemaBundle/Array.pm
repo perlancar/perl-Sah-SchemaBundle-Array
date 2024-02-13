@@ -1,4 +1,4 @@
-package Sah::Schemas::Array;
+package Sah::SchemaBundle::Array;
 
 use strict;
 
@@ -23,6 +23,6 @@ contains schemas that allow you to perform additional checks.
 
 =head1 prepend:SEE ALSO
 
-L<Sah::PSchemas::Array>
+L<Sah::PSchemaBundle::Array>
 
-L<Sah::Schemas::Hash>
+L<Sah::SchemaBundle::Hash>
